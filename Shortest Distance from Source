@@ -1,0 +1,59 @@
+/* Given n, i.e. total number of nodes in an undirected graph numbered from 1 to n and an integer e, i.e. total number of edges in the graph. Find the shortest distance of all the node from the source node s. */
+
+
+import java.util.*;
+class TestClass {
+    public static void main(String args[] ) throws Exception {
+        //BufferedReader
+       
+       Scanner sc=new Scanner(System.in);
+       int n=sc.nextInt();
+       int m=sc.nextInt();
+       List<Integer>[] g=new List[n+5];
+       for(int i=0;i<n+5;i++){
+            g[i]=new ArrayList<Integer>();
+       }
+       for(int i=0;i<m;i++){
+        int x=sc.nextInt();
+        int y=sc.nextInt();
+        g[x].add(y);
+        g[y].add(x);
+       }
+       Queue<Integer> q=new LinkedList<Integer>();
+       int source=sc.nextInt();
+       q.add(source);
+       int []used=new int[n+5];
+       Arrays.fill(used,0);
+       used[source]=1;
+       int[] lvl=new int[n+5];
+       Arrays.fill(lvl, 0);
+       lvl[source]=0;
+       while(!q.isEmpty()){
+            int v=q.poll();
+            for(int u:g[v]){
+                if(used[u]==0){
+                    q.add(u);
+                    used[u]=1;
+                    lvl[u]=lvl[v]+1;
+                }
+                
+            }
+        }
+        int i=1;
+        while(i<=n){
+            System.out.print(lvl[i] + " ");
+            i++;
+        } 
+    }
+}
+
+Sample Input
+5 4
+1 2
+2 3
+2 4
+3 5
+2
+
+Sample Output
+1 0 1 1 2 
